@@ -31,14 +31,14 @@
   ],
   "bookings": [
     {
-      "id": "1738099059172",
+      "id": "1738168547845",
       "userId": 1,
-      "eventId": "1",
-      "eventTitle": "Rails Conference 2024",
+      "eventId": "3",
+      "eventTitle": "PHP Conference 2022",
       "status": "confirmed"
     },
     {
-      "id": "1738100162663",
+      "id": "1738168582269",
       "userId": 1,
       "eventId": "4",
       "eventTitle": "Rust Conference 2021",
