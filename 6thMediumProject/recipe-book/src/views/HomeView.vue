@@ -1,21 +1,22 @@
 <template>
   <main>
-    <h1>Home</h1>
-    <nav>
-      <ul>
-        <li>
-          <RouterLink :to="{name: 'recipe', params: {id: 1}}">Recipe 1</RouterLink>
-        </li>
-        <li>
-          <RouterLink :to="{name: 'recipe', params: {id: 2}}">Recipe 2</RouterLink>
-        </li>
-      </ul>
-    </nav>
+    <h1 class="text-2xl font-bold mb-4">Recipe Book</h1>
+    <div>
+      <input type="text" placeholder="Search recipes...." v-model="searchQuery" class="p-2 border rounded mb-4 w-full">
+    </div>
+    <RecipeList :recipes="filteredRecipes" />
   </main>
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
 
+  import RecipeList from '@/components/RecipeList.vue';
+  import { useRecipeStore } from '@/stores/recipe';
+  import { computed, ref } from 'vue';
+  import { RouterLink } from 'vue-router';
+
+  const recipeStore = useRecipeStore();
+  const searchQuery = ref('');
+  const filteredRecipes = computed(() => recipeStore.filteredRecipes(searchQuery.value))
 
 </script>

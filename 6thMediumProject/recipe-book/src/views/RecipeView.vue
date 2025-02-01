@@ -1,27 +1,30 @@
 <template>
     <div>
-        Recipe {{ $route.params.id }}
+        <h1 class="text-2xl font-bold mb-4">{{ recipe?.name }}</h1>
+        <p class="mb-4">{{ recipe?.description }}</p>
+        <div class="flex items-center gap-4">
+            <RouterLink :to="{ name: 'edit-recipe', params: { id: recipe?.id } }" class="hover:underline">Edit</RouterLink>
+            <button v-if="recipe" @click="recipeStore.toggleFavorite(recipe.id)"
+                class="px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700">
+                {{ isFavorite ? 'Remove from favorites' : 'Add to favorites' }}
+            </button>
+        </div>
     </div>
-    <nav>
-        <ul>
-            <li>
-                <RouterLink :to="{name: 'recipe', params: {id: 1}}">Recipe 1</RouterLink>
-            </li>
-            <li>
-                <RouterLink :to="{name: 'recipe', params: {id: 3}}">Recipe 3</RouterLink>
-            </li>
-        </ul>
-    </nav>
 </template>
 
 <script setup lang="ts">
-    import { onMounted, watch } from 'vue';
-import { useRoute,RouterLink } from 'vue-router';
+    import { useRecipeStore } from '@/stores/recipe';
+    import { computed } from 'vue';
+    import { useRoute } from 'vue-router';
 
     const route = useRoute();
-
-    console.log(route.params.id);
  
-    watch(() => route.params.id, () => console.log('Fetching watch'), {immediate: true});
+    const recipeStore = useRecipeStore();
+
+    const recipe = computed(() => recipeStore.getRecipeById(route.params.id as string));
+
+    const isFavorite = computed(
+        () => recipe.value ? recipeStore.isFavorite(recipe.value.id) : false
+    );
 
 </script>
